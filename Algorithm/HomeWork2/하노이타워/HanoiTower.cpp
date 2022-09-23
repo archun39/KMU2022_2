@@ -1,52 +1,46 @@
 #include <stdio.h>
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
-vector<int> v;
-int countThird;
-
-void hanoi(int n, int from, int to, int tmp);
-
-
+int n;
+int countC;
+int third[10];
+void hanoi(int n, int a, int b, int c);
 int main(){
     int t;
     cin >> t;
-    for(int testCase = 0; testCase<t; testCase++){
-        int n;
+    for(int testcase=0; testcase<t; testcase++){
         cin >> n;
         
-        //초기화
-        countThird = 0;
         hanoi(n,1,3,2);
 
-        for(int i=0; i<v.size(); i++){
-            cout << v[i] << " ";
+        countC = 0;
+        for(int i=0; i<10; i++){
+            third[i] = 0;
         }
         cout << endl;
 
-        v.erase(v.begin(),v.end());
-
-
     }
+    
+
 }
 
-//from = 1, to = 3, tmp= 2;
-void hanoi(int n, int from, int to, int tmp){
-   if(n>0)
-    {   
-        hanoi(n-1,from,tmp,to);
-        if(to==3){
-            v.push_back(n);
-            countThird++;
+// a : 1, b : 3, c : 2
+void hanoi(int n, int a, int b, int c){
+    
+    if(n>0){
+        hanoi(n-1,a,c,b);
+        if(b==3) {
+            cout << n << " ";
+            countC++;
+            third[countC] = n;
         }
-        if(from == 3){
-            countThird--;
-            if(countThird== 0) v.push_back(0);
-            else v.push_back(v[v.size()-2]);
+        if(a==3){
+            countC--;
+            if(countC==0) cout << 0 << " ";
+            else cout << third[countC] << " ";
         }
-		hanoi(n-1,tmp,to,from);
-        
+        hanoi(n-1,c,b,a);
     }
 }
